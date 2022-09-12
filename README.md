@@ -56,9 +56,9 @@ There may be extras of some components (sockets, LEDs, etc) just in case.
 | Description                                 | Image                | Notes |
 | ------------------------------------------- | -------------------- | :---: |
 | 1x Pro Micro & 18x header pins             | ![Photo of Pro Micro with header pins](https://i0.wp.com/mechwild.com/wp-content/uploads/2020/12/pro_micro.png?resize=200%2C145) | :warning: **A Pro Micro[^1] is *required*, unlike the other items on this list!** :warning: |
-| 1x RGB LED strip (8 LEDs)                   | (unavailable)        | SMD LEDs will not work for this build.      |
-| 90x 0305 Mill-Max sockets                   | (unavailable)        | Used for making the switches hot-swappable. |
-| 90x 7305 Mill-Max sockets                   | (unavailable)        | Used for making the switches hot-swappable. More expensive and more difficult to solder. |
+| 1x RGB LED strip (8 LEDs)                   | ![Photo of RGB LED strip with connector](https://i.imgur.com/yXB0cfvb.jpg) | SMD LEDs will not work for this build.      |
+| 90x 0305 Mill-Max sockets                   | ![0305 Mill-Max sockets are longer and silver in color.](https://i.imgur.com/aAlUrJPb.jpg) | Used for making the switches hot-swappable. |
+| 90x 7305 Mill-Max sockets                   | ![7305 Mill-Max sockets are shorter and gold in color.](https://i.imgur.com/rrKOZNxb.jpg) | Used for making the switches hot-swappable. More expensive and more difficult to solder. |
 | SIP socket (18x positions) & 18x brass pins | ![Photo of SIP socket with Mill-Max pins](https://i0.wp.com/mechwild.com/wp-content/uploads/2021/10/sockets_pins.png?resize=200%2C200) | Used to socket the Pro Micro, which makes it removable without desoldering. |
 | 1x Diode Bender                             | ![Multiple diode benders pictured](https://media.discordapp.net/attachments/837441710698004531/998729928654737488/IMG_9335.jpg?width=200&height=150)        | Helps you [bend multiple diodes at a time consistently](https://mechwild.com/guides/general/diodes/). |
 
@@ -110,6 +110,8 @@ Note that [specific hardware](https://zmk.dev/docs/hardware), like a [nice!nano]
 
 Once the firmware has been flashed, verify that the Pro Micro now shows up to your computer as a keyboard named `BDE Rev2`.
 
+[![Example screenshot from Windows](https://i.imgur.com/Ih4VCqKl.png)](https://i.imgur.com/Ih4VCqK.png)
+
 If it still shows up as the original device, the flash did not work. If you are using QMK Toolbox, pay close attention to the messages in its console to try and figure out what went wrong. Just because the program says `Flash complete` does not mean the flash completed *successfully!*
 
 ### Step 1C: Solder Pins to Pro Micro
@@ -130,13 +132,17 @@ The [Visual Guide to Socket a Microcontroller](https://filterpaper.github.io/soc
 
 Insert the 6x6mm button into the spot marked `SW1` on the bottom of the PCB and solder it in place.
 
+![Close up picture of Reset button](https://i.imgur.com/RTtnvMXm.jpg)
+
 Once it is soldered on, you can press this button once to reboot the board, and twice to reset to bootloader for flashing[^3].
 
 ### Step 3: Diodes
 
 [Follow these instructions](https://mechwild.com/guides/general/diodes/). Like the reset button, the diodes are inserted on the bottom of the PCB.
 
-Avoid accidentally connecting the metal legs/solder joints of two different diodes. If they aren't kept separate, you may end up with unintentional key presses.
+[![Two diodes inserted and soldered into the PCB.](https://i.imgur.com/KjfsSCQm.jpg)](https://i.imgur.com/KjfsSCQ.jpg)
+
+Avoid accidentally [connecting the metal legs/solder joints of two different diodes.](https://i.imgur.com/CwzknkV.jpg) If they aren't kept separate, you may end up with unintentional key presses.
 
 ### Step 4: Attach Pro Micro to PCB
 
@@ -156,7 +162,8 @@ The RGB strip can be attached at any time before soldering switches in—or at a
 
 ---
 
-#### ...with a connector attached
+<details>
+<summary>Instructions for an RGB strip with a connector and two extra wires</summary>
 
 The strip should be wired as follows:
 
@@ -164,17 +171,30 @@ The strip should be wired as follows:
 | :-----: | :-------: | :-------: |
 | 5V      | RGB Data  | GND       |
 
-The connector and extra 5V/GND wires can be cut off; they aren't necessary. If the strip doesn't work, cut off the heatshrink to inspect the joints on the strip; it isn't strictly necessary either.
+The connector and extra 5V/GND wires can be cut off; they aren't necessary.
 
-#### ...that is loose with separate wires
+[![Top: strip with connector and extra wires. Bottom: strip trimmed up for use with BDE](https://i.imgur.com/T76dGPo.jpg)](https://i.imgur.com/T76dGPo.jpg)
 
-Using the same color scheme the presoldered strip uses is optional, but be sure to solder the wires to the correct end of the strip. The triangular arrow on the strip always points *away* from the wires.
+If the strip doesn't work, cut off the heatshrink at the start of the strip and inspect the solder joints there.
+
+</details>
+<details>
+<summary>Instructions for an RGB strip and three separate wires</summary>
+
+Using the same color scheme the presoldered strip uses is optional, but be sure to solder the wires to the correct end of the strip.
+
+ - The triangular arrow on the strip always points *away* from the wires.
+ - One of the wires will connect to `DIN` on the strip.
+
+The "completed, working example" below shows what this will look like.
+
+</details>
 
 ---
 
 The 5V, RGB and GND pads aren't labeled on the BDE PCB; this image illustrates which is which.
 
-![RGB, 5V & GND pads](https://cdn.discordapp.com/attachments/837441710698004531/937861235456741396/IMG_29222.jpg)
+[![RGB, 5V & GND pads](https://media.discordapp.net/attachments/837441710698004531/937861235456741396/IMG_29222.jpg?width=362&height=250)](https://media.discordapp.net/attachments/837441710698004531/937861235456741396/IMG_29222.jpg)
 
 1. If the colored wires are stuck together, peel them far enough apart to work with separately.
 2. Cut some amount of insulation away from each wire and thread the metal core through the PCB.
@@ -187,11 +207,15 @@ Cutting more of the insulation off may make things easier, but make sure the met
 
 Note that the wires between the PCB and the strip will end up *crossing over* each other and the central RGB Data wire. This image illustrates a completed, working example:
 
-![Cross the wires, Peter!](https://cdn.discordapp.com/attachments/837441710698004531/940402438098280459/B58769AB-16DD-4473-BA54-7A74EC036EAA.jpg)
+![Cross the wires, Peter!](https://imgur.com/QiQzVCf.jpg)
 
 ### Step 6: OLED
 
-This is the first part that goes on the top of the PCB. [Just like step 6 of the MurphPad build guide](https://mechwild.com/guides/build-guides/murphpad-build-guide/#step6):
+This is the first part that goes on the top of the PCB.
+
+[![OLED soldered into PCB](https://i.imgur.com/Yydg28Xm.jpg)](https://i.imgur.com/Yydg28X.jpg)
+
+[Just like step 6 of the MurphPad build guide](https://mechwild.com/guides/build-guides/murphpad-build-guide/#step6):
 
 1. Solder the OLED module to the small pin header it was packaged with; if the pin header has one too many pins, break or clip off the extra.
 2. Pry the plastic spacer off with tweezers.
@@ -202,7 +226,11 @@ This is the first part that goes on the top of the PCB. [Just like step 6 of the
 
 If you are not using an encoder, [skip to step 8](#step-8-plug-in-and-test).
 
-Insert into the top of the PCB and solder. [Just like step 7 of the MurphPad build guide](https://mechwild.com/guides/build-guides/murphpad-build-guide/#step7). You may need to bend some pins back if they were bent out of place during shipment.
+Insert into the spot marked ENC1 on the top of the PCB and solder. [Just like step 7 of the MurphPad build guide](https://mechwild.com/guides/build-guides/murphpad-build-guide/#step7).
+
+[![Encoder inserted into PCB and soldered](https://i.imgur.com/KfqpBZ4m.jpg)](https://i.imgur.com/KfqpBZ4.jpg)
+
+You may need to bend the thinner pins of the encoder back into place if they were bent out of place during shipment.
 
 ### Step 8: Plug In and Test
 
